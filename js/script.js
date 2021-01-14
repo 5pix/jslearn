@@ -26,21 +26,33 @@ const movieDB = {
 
 
 const promo = document.querySelector('.promo'), 
-      delPromo = promo.querySelector('.promo__adv'),
+    //   delPromo = promo.querySelector('.promo__adv'), // my variant
+      adv = promo.querySelectorAll('.promo__adv img'),
       chGenre = promo.querySelector('.promo__genre'),
-      chBg = promo.querySelector('.promo__bg');
+      chBg = promo.querySelector('.promo__bg'),
+      promoList = document.querySelectorAll('.promo__interactive-list > li');
       
-const promoList = document.querySelectorAll('.promo__interactive-list > li');
-    promoList.forEach((value, i) => {
-        value.textContent = i + 1 +' '+ movieDB.movies[i];
-        // console.log(value[i]);
-        // i++;
-    });
-// promoList.movieDB.movies;
+      movieDB.movies.sort(); 
+    // promoList.forEach((value, i) => {
+    //     value.textContent = i + 1 +' '+ movieDB.movies[i];
+    // });
 
-      delPromo.remove();
+    //   delPromo.remove(); //my variant
+    //from lesson
+      adv.forEach(item => { item.remove(); });
+
       chGenre.textContent = "ДРАМА";
-      chBg.style.cssText = "background: url('../img/bg.jpg') center top;";
+    //   chBg.style.cssText = "background: url('../img/bg.jpg') center top;"; //my variant
+      chBg.style.backgroundImage = "url('img/bg.jpg')";
 
-// console.log(promoList);
+    //   last  task from video lesson
 
+    const movieList = document.querySelector('.promo__interactive-list'); //first element from page
+    movieList.innerHTML = ""; // cleat content from HTML tag
+    //add new data from js DB
+    movieDB.movies.forEach((item, i) => {
+        movieList.innerHTML += `
+        <li class="promo__interactive-item">${i+1} ${item}
+            <div class="delete"></div>
+        </li>`;
+    });
