@@ -45,42 +45,57 @@ let   newList = document.querySelector('.promo__interactive-list');
 
       // вешаем на форму обработчик события нажатия кнопки отправить
       addForm.addEventListener('submit', (event) => {
-        // отмена действия по-умолчанию  
-        event.preventDefault();
+        
+        event.preventDefault();// отмена действия по-умолчанию  
         
         if (addInput.value) {
-            movieDB.movies.push(addInput.value);
-                       
-           
+            let favorite = document.querySelector('[type=checkbox]');
+            
+            if(favorite.checked){
+                console.log('Добавляем любимый фильм');
+            }
+            if (addInput.value.length > 21){
+                movieDB.movies.push(`${addInput.value}...`);
+            } else {
+                movieDB.movies.push(addInput.value);
+            }
+            sortFilms(movieDB.movies);
+            createList(movieDB.movies, newList);
+            
         }
             addForm.reset();
       });
 
-      let createList = (movies) => {
-          newList.innerHTML = "";
+      let createList = (movies, parent) => {
+        
+          
 
+        parent.innerHTML = "";
+          
           movies.forEach((item, i) => {
-              newList.innerHTML += `<li class="promo__interactive-item">${i + 1} ${item}
-                <div class="delete"></div>
-                </li>`;
-          });
+                parent.innerHTML += `<li class="promo__interactive-item">${i + 1} ${item}
+              <div class="delete"></div>
+              </li>`;
+            });
+            document.querySelectorAll('.delete').forEach((btn, i) => {
+                btn.addEventListener('click', () => {
+                    btn.parentElement.remove();
+                    movieDB.movies.splice(i, 1);
+                    createList(movieDB.movies, newList);
+              });
+            });
+            //   let parenList = btns.parentElement;
+
+            
       };
       
-// const promoList = document.querySelectorAll('.promo__interactive-list > li');
-//     promoList.forEach((value, i) => {
-//         value.textContent = i + 1 +' '+ movieDB.movies[i];
-//         // console.log(value[i]);
-//         // i++;
-//     });
-// promoList.movieDB.movies;
-
       delPromo.remove();
       chGenre.textContent = "ДРАМА";
       chBg.style.cssText = "background: url('../img/bg.jpg') center top;";
 
 
-      sortFilms(movieDB.movies);
-      createList(movieDB.movies);
+      
+      createList(movieDB.movies, newList);
 });
 
 
