@@ -1,44 +1,28 @@
 "use strict";
 
-window.addEventListener("DOMContentLoaded", () => {
+const now = new Date();
 
-    const tabs = document.querySelectorAll('.tabheader__item'),
-        tabsContent = document.querySelectorAll('.tabcontent'),
-        tabsParent = document.querySelector('.tabheader__items');
+// console.log(now.getFullYear()); //год
+// console.log(now.getMonth()); //месяц
+// console.log(now.getDate()); //номер числа в месяце
+// console.log(now.getDay()); //номер дня недели
+// console.log(now.getHours()); //часы
+// console.log(now.getUTCHours()); // часы в UTC зоне (-3 часа)
+// console.log(now.getTimezoneOffset()); //разница между тек. час. поясом и UTC (в минутах)
 
-        function hideTabConent() {
-            tabsContent.forEach(item => {
-                item.classList.add('hide'); 
-                item.classList.remove('show', 'fade'); 
-            });
+// console.log(now.getTime()); //милисек. от 1970 года
 
-            tabs.forEach(item => {
-               item.classList.remove("tabheader__item_active"); 
-            });
-        }
+/*  сеттеры */
 
-        function showTabConent(i = 0) {
-            tabsContent[i].classList.add('show', 'fade');
-            tabsContent[i].classList.remove('hide');
-            tabs[i].classList.add("tabheader__item_active"); 
-        }
+// console.log(now.setHours(18));
+// console.log(now);
 
+let start = new Date();
 
-        hideTabConent();
-        showTabConent();
+for (let i = 0; i < 10000; i++){
+    let some = i ** 3;
+}
 
+let end = new Date();
 
-        tabsParent.addEventListener('click', (event) => {
-
-            const target = event.target;
-            
-            if (target && target.classList.contains('tabheader__item')) {
-                tabs.forEach((item, i) => {
-                    if (target == item) {
-                        hideTabConent();
-                        showTabConent(i);
-                    }
-                });
-            }
-        });
-});
+alert(`Цикл отработал за ${end - start} милисек`)
